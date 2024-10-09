@@ -15,18 +15,22 @@ while(true)
     var client = server.AcceptTcpClient();
     Console.WriteLine("Client connected!!!");
 
-    var stream = client.GetStream();
+    try
+    {
+        var stream = client.GetStream();
 
-    var buffer = new byte[1024];
+        var buffer = new byte[1024];
 
-    stream.Read(buffer);
+        stream.Read(buffer);
 
-    var msg = Encoding.UTF8.GetString(buffer);
+        var msg = Encoding.UTF8.GetString(buffer);
 
-    Console.WriteLine("Message from client: " + msg);
+        Console.WriteLine("Message from client: " + msg);
 
-    buffer = Encoding.UTF8.GetBytes(msg.ToUpper());
-    stream.Write(buffer);
+        buffer = Encoding.UTF8.GetBytes(msg.ToUpper());
+        stream.Write(buffer);
+    }
+    catch { }
 
    
 
