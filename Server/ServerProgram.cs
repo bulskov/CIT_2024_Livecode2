@@ -1,6 +1,7 @@
 ﻿
 using System.Net;
 using System.Net.Sockets;
+using System.Text;
 
 var port = 5000;
 
@@ -13,4 +14,20 @@ while(true)
 {
     var client = server.AcceptTcpClient();
     Console.WriteLine("Client connected!!!");
+
+    var stream = client.GetStream();
+
+    var buffer = new byte[1024];
+
+    stream.Read(buffer);
+
+    var msg = Encoding.UTF8.GetString(buffer);
+
+    Console.WriteLine("Message from client: " + msg);
+
+    buffer = Encoding.UTF8.GetBytes(msg.ToUpper());
+    stream.Write(buffer);
+
+   
+
 }
